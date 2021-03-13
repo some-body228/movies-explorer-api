@@ -1,11 +1,11 @@
-const Movie = require('../models/movie')
-module.exports = (req, res) =>{
-  Movie.find({owner: req.user})
-    .then(movies =>{
-      console.log(movies)
-      res.send(movies)
+const Movie = require('../models/movie');
+
+module.exports = (req, res, next) => {
+  Movie.find({ owner: req.user })
+    .then((movies) => {
+      res.send(movies);
     })
-    .catch(err => {
-      console.log(err.message)
-    })
-}
+    .catch((err) => {
+      next(err);
+    });
+};

@@ -1,7 +1,7 @@
-
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
+const AlreadyExistsError = require('../errors/AlreadyExistsError');
 
 module.exports = (req, res, next) => {
   const {
@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
         if (err.name === 'ValidationError') {
           next(new BadRequestError('ValidationError'));
         } else if (err.name === 'MongoError') {
-          next(new BadRequestError('пользователь с таким email уже есть'));
+          next(new AlreadyExistsError('пользователь с таким email уже есть'));
         } else {
           next(err);
         }

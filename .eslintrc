@@ -1,6 +1,14 @@
 {
-    "extends": "airbnb-base",
+  "extends": "airbnb-base",
+  "parserOptions": {
+    "ecmaVersion": 2017
+},
+
+"env": {
+    "es6": true
+},
     "rules": {
-      "allow": ["_id"]
+      "no-underscore-dangle": ["error", { "allow": ["_id"] }]
+
   }
 }

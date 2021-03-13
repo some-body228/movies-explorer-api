@@ -1,24 +1,17 @@
 const userRouter = require('express').Router();
 
-const getUser = require('../controllers/getUser')
-const putUser = require('../controllers/putUser')
-const { celebrate, Joi, errors } = require('celebrate');
+const { celebrate, Joi } = require('celebrate');
+const getUser = require('../controllers/getUser');
+const patchUser = require('../controllers/patchUser');
 
-
-
-userRouter.get("/users/me", getUser)
-userRouter.put("/users/me", celebrate(
+userRouter.get('/users/me', getUser);
+userRouter.patch('/users/me', celebrate(
   {
     body: Joi.object().keys({
       name: Joi.string().required(),
       email: Joi.string().required().email(),
-      password: Joi.string().required().min(8),
     }),
   },
-), putUser)
-
-
-
-
+), patchUser);
 
 module.exports = userRouter;
