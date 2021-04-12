@@ -4,6 +4,7 @@ const { celebrate, Joi, errors } = require('celebrate');
 const bodyParser = require('body-parser');
 const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./midlwears/logger');
+const cors = require('cors');
 
 const auth = require('./midlwears/auth');
 
@@ -16,11 +17,26 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(bodyParser.json());
 
+const options = {
+  origin: [
+    'http://localhost:8080',
+    'http://localhost:3000',
+    'https://hop-hey.students.nomoredomains.monster',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTION'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'authorization'],
+  credentials: true,
+};
+
 const userRouter = require('./routs/user');
 const movieRouter = require('./routs/movie');
 const signIn = require('./controllers/signIn');
 const signUp = require('./controllers/signUp');
 const error = require('./midlwears/erorr');
+
+app.use('*', cors(options));
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useNewUrlParser: true,
