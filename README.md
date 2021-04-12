@@ -1,3 +1,3 @@
 # movies-explorer-api
 
-https://hop-hey.students.nomoredomains.monster
+http://hop-hey.students.nomoredomains.monster
